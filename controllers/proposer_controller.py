@@ -16,6 +16,3 @@ class ProposerController:
     self.proposers.append(proposer)
 
   
-
-  
-      

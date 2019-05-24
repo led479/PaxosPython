@@ -1,2 +1,4 @@
 # VSCODE config
 settings.json
+
+__pycache__/*
