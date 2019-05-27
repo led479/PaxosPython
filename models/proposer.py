@@ -11,3 +11,5 @@ class Proposer:
       self.v = v + random
     else:
       self.v = v
+    
+    print(f"Proposer criado (n: {self.n} v: {self.v})\n")
