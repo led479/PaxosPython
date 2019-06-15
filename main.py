@@ -10,6 +10,7 @@ while (i < 20):
   i += 1
 print("20 acceptors foram criados")
 
+
 i = 0
 while i < 5:
   mc.pc.create_proposer(valor_para_validar)
