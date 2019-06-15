@@ -19,5 +19,8 @@ class ProposerController:
 # Cada proposer envia prepare_request aos acceptors
   def prepare_request(self):
     for proposer in self.proposers: # Também é possivel fazer para cada proposer assim que for criado chamar esse método.
-        response =  self.mc.ac.prepare_response(proposer)
-        proposer.responses.append(response)
+       self.mc.ac.prepare_response(proposer)
+   
+   # Verifica se a maioria dos acceptores (metade +1) concordaram com a response
+  def accept_request(self):
+      pass
