@@ -15,6 +15,3 @@ class Proposer:
     
     print(f"Proposer criado (n: {self.n} v: {self.v})\n")
 
-  def prepare_request(self):
-    for acceptor in self.pc.mc.ac.acceptors:
-      print(acceptor)
