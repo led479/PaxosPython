@@ -25,7 +25,7 @@ class AcceptorController:
         response = {
             'message': "Prepare Response",
             'proposer': "no previus"
-        
+        }
         return response
         # Se o acceptor ja tiver uma proposta ele fica com a maior
       else:
