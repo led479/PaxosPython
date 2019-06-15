@@ -43,4 +43,5 @@ class AcceptorController:
             # Se a nova proposta for menor é ignorada
             response = None
       proposer.responses.append(response) 
-
+  
+  def accepted(self, proposer):        pass

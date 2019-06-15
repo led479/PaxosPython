@@ -10,3 +10,4 @@ class Acceptor:
       'n': proposer.n,
       'v': proposer.v
     }
+
