@@ -5,13 +5,13 @@ valor_para_validar = 8
 mc = MainController()
 
 i = 0
-while (i < 2):
+while (i < 3):
   mc.ac.create_acceptor()
   i += 1
 print(f"{len(mc.ac.acceptors)} acceptors foram criados")
 
 i = 0
-while i < 2:
+while i < 3:
   mc.pc.create_proposer(valor_para_validar)
   sleep(0.25)
   i += 1
