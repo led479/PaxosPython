@@ -1,5 +1,6 @@
 from controllers.main_controller import MainController
 from time import sleep
+from utilits.message import Message
 
 valor_para_validar = 8
 mc = MainController()
@@ -8,7 +9,7 @@ i = 0
 while (i < 20):
   mc.ac.create_acceptor()
   i += 1
-print(f"{len(mc.ac.acceptors)} acceptors foram criados")
+print(f"{len(mc.ac.acceptors)} {Message.acceptorsCreate.value}")
 
 i = 0
 while i < 30:

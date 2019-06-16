@@ -1,4 +1,5 @@
 from models.acceptor import Acceptor
+from utilits.message import Message
 
 class AcceptorController:
 
@@ -24,8 +25,8 @@ class AcceptorController:
       if greater_proposer == {}:
         acceptor.set_greater_proposer(proposer)
         response = {
-            'message': "Prepare Response",
-            'proposer': "no previus"
+            Message.message.value: Message.prepareResponse,
+            Message.proposer: Message.noPrevious.value
         }
         
         # Se o acceptor ja tiver uma proposta ele fica com a maior
@@ -34,8 +35,8 @@ class AcceptorController:
           # Se há proposta recebida for maior ele fica com ela e reponde ao proposer a proposta cujo valor é menor
         if proposer.n > greater_proposer["n"]:
             response = {
-            'message': "Prepare Response",
-            'proposer': acceptor.greater_proposer # Atualizar valor da maior proposta
+            Message.message.value: Message.prepareResponse,
+            Message.proposer: acceptor.greater_proposer # Atualizar valor da maior proposta
             }
             acceptor.set_greater_proposer(proposer)
         else:
@@ -44,4 +45,6 @@ class AcceptorController:
             response = None
       proposer.responses.append(response) 
   
-  def accepted(self, proposer):        pass
+  def accepted(self, proposer):
+        pass
+

@@ -1,5 +1,7 @@
 from models.proposer import Proposer
+from utilits.message import Message
 import math
+
 
 class ProposerController:
 
@@ -34,7 +36,7 @@ class ProposerController:
         if min_accept_request > no_response:
             for response in proposer.responses:
                 # no previus, acceptor aceito a request pois nao haviam outras propostas
-                if response['proposer'] != "no previus":
+                if response['proposer'] != Message.noPrevious.value:
                     v_response = response['proposer']['v'] #Armazena o valor de v 
                     # Proposer atualiza seu valor com o maior v recebido pelos acceptors
                     if v_response > proposer.v:
