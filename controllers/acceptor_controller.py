@@ -17,7 +17,8 @@ class AcceptorController:
     acceptor = Acceptor(self, self.generate_id())
     self.acceptors.append(acceptor)
 
-  def prepare_response(self, proposer):
+  def prepare_response(self, request):
+    proposer = request['proposer']
     for acceptor in self.acceptors:
       greater_proposer = acceptor.greater_proposer
       

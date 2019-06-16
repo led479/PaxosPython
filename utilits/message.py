@@ -6,3 +6,4 @@ class Message(Enum):
     message = "message"
     prepareResponse = "Prepare Response"
     noPrevious = "no previous"
+    prepareRequest = "Prepare Request"
