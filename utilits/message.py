@@ -8,4 +8,4 @@ class Message(Enum):
     prepareRequest = "Prepare Request"
     noPrevious = "no previous"
     acceptRequest = "Accept Request"
-    
+    accepted = "Accepted"

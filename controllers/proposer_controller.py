@@ -14,7 +14,7 @@ class ProposerController:
     if len(self.proposers) == 0:
       return 40 #1
     #return self.proposers[-1].n + 1
-    return self.proposers[-1].n + 1
+    return self.proposers[-1].n - 1
   
   def create_proposer(self, v):
     proposer = Proposer(self, self.proposal_number(), v)
@@ -38,28 +38,29 @@ class ProposerController:
   def accept_request(self):
     for proposer in self.proposers: 
         
-        no_response = proposer.responses.count(None) # Armazena a quantidade  de acceptors que não responderam, ignorou a solicitação
+        #no_response = proposer.responses.count(None) # Armazena a quantidade  de acceptors que não responderam, ignorou a solicitação
         min_accept_request = math.floor(len(self.mc.ac.acceptors) / 2 + 1) # Metade dos acceptors devem ter respondido prepare request com prepare response
-        
+
         #Verifica se a maioria dos acceptores respondeu ao prepare request
-        if min_accept_request > no_response:
+        if len(proposer.responses) >= min_accept_request:
             for response in proposer.responses:
                 
                 # no previus, acceptor aceitou a request pois nao haviam outras propostas
                 if response['proposer'] != Message.noPrevious.value:
-                    v_response = response['proposer']['v'] #Armazena o valor de v recebido do acceptor
+                    v_response = response['proposer']['v'] #Armazena o valor de v recebido no prepare response do acceptor
                     
                     # Proposer atualiza seu valor com o maior v recebido pelos acceptors
                     if v_response > proposer.v:
                         proposer.v = v_response;
-        # Prepara Messagm accept request
-        accept = {
+                    
+            # Prepara Messagem accept request
+            accept = {
                 Message.message.value : Message.acceptRequest.value,
                 Message.proposer.value : {
                                         'n': proposer.n,
                                         'v': proposer.v
-                                        } 
-            }                
+                                         } 
+                }                
         
-        # Depois de atualizado o valor do proposer ele solicita accepted aos acceptors
-        self.mc.ac.accepted(accept)
+            # Depois de atualizado o valor do proposer ele solicita accepted aos acceptors
+            self.mc.ac.accepted(accept)
