@@ -23,11 +23,16 @@ class LearnerController:
         for learner in self.learners:
             first_value = accepted_values[0]['Accepted'] # Pega primeiro valor do primeiro accept para compara com os deamais
             count_value = 1 # Conta quantos valores iguais foram encontrados
+            position_list = 1 # Conta posição na lista de valores recebidos
             for accepted_value in accepted_values:
                 if accepted_value['Accepted'] == first_value:
                     count_value +=1
+                    position_list +=1
                 # Verifica quantidade de valores iguais é igual ou maior que a quantidade de respostas minimas, maioria consenso
                 if count_value >= self.mc.ac.min_accept_request():
                     print(f"{Message.accepeted_value.value}{accepted_value['Accepted']}")
                     break
+                # Se estiver na metade da lista +1 sgnifica que não possi
+                if position_list >= self.mc.ac.min_accept_request():
+                    print(F"{Message.no_consensus.value}")
                     

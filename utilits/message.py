@@ -10,3 +10,4 @@ class Message(Enum):
     acceptRequest = "Accept Request"
     accepted = "Accepted"
     accepeted_value = "Accepetd value: v:"
+    no_consensus = "Não houve consenso dos acceptors na escolha de valor v."
