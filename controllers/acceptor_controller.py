@@ -57,6 +57,6 @@ class AcceptorController:
       responses.append(response) #Armazena a resposta do acceptor para o proposer recebido
     return responses # Retorna ao proposer prepare response de todos os acceptors
 
-  def accepted(self, proposer):
+  def accepted(self, accept):
         pass
 

@@ -44,12 +44,22 @@ class ProposerController:
         #Verifica se a maioria dos acceptores respondeu ao prepare request
         if min_accept_request > no_response:
             for response in proposer.responses:
+                
                 # no previus, acceptor aceitou a request pois nao haviam outras propostas
                 if response['proposer'] != Message.noPrevious.value:
-                    v_response = response['proposer']['v'] #Armazena o valor de v 
+                    v_response = response['proposer']['v'] #Armazena o valor de v recebido do acceptor
+                    
                     # Proposer atualiza seu valor com o maior v recebido pelos acceptors
                     if v_response > proposer.v:
                         proposer.v = v_response;
+        # Prepara Messagm accept request
+        accept = {
+                Message.message.value : Message.acceptRequest.value,
+                Message.proposer.value : {
+                                        'n': proposer.n,
+                                        'v': proposer.v
+                                        } 
+            }                
         
         # Depois de atualizado o valor do proposer ele solicita accepted aos acceptors
-        self.mc.ac.accepted(proposer)
+        self.mc.ac.accepted(accept)
