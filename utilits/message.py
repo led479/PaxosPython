@@ -5,5 +5,6 @@ class Message(Enum):
     proposer = "proposer"
     message = "message"
     prepareResponse = "Prepare Response"
-    noPrevious = "no previous"
     prepareRequest = "Prepare Request"
+    noPrevious = "no previous"
+    

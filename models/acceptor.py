@@ -5,9 +5,9 @@ class Acceptor:
     self.id = id
     self.greater_proposer = {}
 
-  def set_greater_proposer(self, proposer):
+  def set_greater_proposer(self, request_proposer):
     self.greater_proposer = {
-      'n': proposer.n,
-      'v': proposer.v
+      'n': request_proposer['n'],
+      'v': request_proposer['v']
     }
 

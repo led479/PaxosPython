@@ -6,13 +6,13 @@ valor_para_validar = 8
 mc = MainController()
 
 i = 0
-while (i < 20):
+while (i < 2):
   mc.ac.create_acceptor()
   i += 1
 print(f"{len(mc.ac.acceptors)} {Message.acceptorsCreate.value}")
 
 i = 0
-while i < 30:
+while i < 3:
   mc.pc.create_proposer(valor_para_validar)
   sleep(0.25)
   i += 1

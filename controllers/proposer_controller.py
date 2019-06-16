@@ -26,21 +26,25 @@ class ProposerController:
        
        request = {
            Message.message.value: Message.prepareRequest.value,
-           Message.proposer.value: proposer
+           Message.proposer.value: {
+                                   'n': proposer.n,
+                                   'v': proposer.v
+                                   }
        }
-       self.mc.ac.prepare_response(request)
+       responses = self.mc.ac.prepare_response(request)
+       proposer.responses = responses
 
    # Verifica se a maioria dos acceptores (metade +1) concordaram com a response
   def accept_request(self):
-    for proposer in self.proposers: # Também é possivel fazer para cada proposer assim que for criado chamar esse método.
+    for proposer in self.proposers: 
         
-        no_response = proposer.responses.count(None) #Verifica se algum acceptor não respondeu, ignorou a solicitação
-        min_accept_request = math.floor(len(self.mc.ac.acceptors) / 2 + 1) # Metade dos acceptors devem ter respondido prepare request
+        no_response = proposer.responses.count(None) # Armazena a quantidade  de acceptors que não responderam, ignorou a solicitação
+        min_accept_request = math.floor(len(self.mc.ac.acceptors) / 2 + 1) # Metade dos acceptors devem ter respondido prepare request com prepare response
         
         #Verifica se a maioria dos acceptores respondeu ao prepare request
         if min_accept_request > no_response:
             for response in proposer.responses:
-                # no previus, acceptor aceito a request pois nao haviam outras propostas
+                # no previus, acceptor aceitou a request pois nao haviam outras propostas
                 if response['proposer'] != Message.noPrevious.value:
                     v_response = response['proposer']['v'] #Armazena o valor de v 
                     # Proposer atualiza seu valor com o maior v recebido pelos acceptors
