@@ -17,6 +17,7 @@ while i < 3:
   sleep(0.25)
   i += 1
 
+mc.lp.create_learner()
 
 mc.pc.prepare_request() # Mudar isso depois
 mc.pc.accept_request() # Mudar isso depois

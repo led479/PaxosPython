@@ -1,5 +1,6 @@
 from models.acceptor import Acceptor
 from utilits.message import Message
+import math
 
 class AcceptorController:
 
@@ -16,6 +17,11 @@ class AcceptorController:
   def create_acceptor(self):
     acceptor = Acceptor(self, self.generate_id())
     self.acceptors.append(acceptor)
+
+  def min_accept_request(self):
+      # Retorna a quantidade minima respostas que um proposer deve receber
+      return math.floor(len(self.acceptors) / 2 + 1)
+
 
   def prepare_response(self, request):
     # Armazena as repostas de cada acceptor, para ser enviada ao proposer

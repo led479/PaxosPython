@@ -9,3 +9,4 @@ class Message(Enum):
     noPrevious = "no previous"
     acceptRequest = "Accept Request"
     accepted = "Accepted"
+    accepeted_value = "Accepetd value: v:"
