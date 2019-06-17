@@ -19,16 +19,16 @@ while i < 3:
 
 mc.lp.create_learner()
 
-mc.pc.prepare_request() # Mudar isso depois
-mc.pc.accept_request() # Mudar isso depois
+#mc.pc.prepare_request() # Mudar isso depois
+#mc.pc.accept_request() # Mudar isso depois
 
-# Proposers enviar prepare_request para todos os acceptors
-
-
-#mc.ac.acceptors[0].set_greater_proposer(mc.pc.proposers[0])
-#mc.pc.proposers[0].prepare_request()
-
-#mc.ac.acceptors[0].set_greater_proposer(mc.pc.proposers[0])
-#print(mc.ac.acceptors[0].greater_proposer)
-
-
+i =1
+accepted_values = []
+while i < 21:
+    accepted_value = {
+                    Message.message.value: Message.accepted.value, 
+                    Message.accepted.value :i
+                 }
+    i+=1
+    accepted_values.append(accepted_value)
+mc.lp.accepted_paxos(accepted_values)
