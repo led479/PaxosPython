@@ -25,10 +25,11 @@ class LearnerController:
             count_value_equals = 0 # Conta quantos valores iguais foram encontrados
             position_list = 0 # Conta posição na lista de valores recebidos
             total_values = len(accepted_values) # Armazena a quantidade de valores que
-            i = 0
+            count_verified = 0
             
-            for accepted_value in accepted_values:
-                if accepted_value['Accepted'] == first_value:
+            while position_list < total_values:
+            #for accepted_value in accepted_values:
+                if accepted_values[position_list]['Accepted'] == first_value:
                     count_value_equals +=1
                 
                 position_list +=1    # Adiciona a quantidade de elementos percorridos na lista
@@ -44,9 +45,11 @@ class LearnerController:
 
                 # Se quantidade de respostas que falta para v ser aceito for menor que a quantidade de elementos na lista
                 if lack_elements < lack_response:
-                    if i == total_values:
+                    if count_verified == total_values:
                         print(F"{Message.no_consensus.value}")
                     else:
-                        i+=1 
-                        first_value = accepted_value[i]['Accepted']
+                        count_verified+=1 # 
+                        first_value = accepted_values[i]['Accepted'] # Troca v para testar novo valor
+                        total_values-=1 # Segundo elemento percorre a lista a partir dele nao olhando valores anteriores, pois já foi verificado se era igual
+                        position_list = i; # Ponteiro retornar para o proximo v que ser testado para ser aceito ou não
                     
