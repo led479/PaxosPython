@@ -2,6 +2,7 @@ from utilits.message import Message
 from models.learner import Learner
 from utilits.message import Message
 import collections
+from time import sleep
 
 
 class LearnerController:
