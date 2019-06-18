@@ -36,6 +36,7 @@ class AcceptorController:
       # Armazena a maior proposta conhecida pelo acceptor
       greater_proposer = acceptor.greater_proposer
       
+      
       # Se acceptor não conter nenhuma outra proposta ele guarda a proposta e envia um prepare reponse com no previous
       if greater_proposer == {}:
         acceptor.greater_proposer =  request_proposer #set_greater_proposer(request_proposer)
@@ -45,9 +46,11 @@ class AcceptorController:
             Message.message.value: Message.prepareResponse,
             Message.proposer.value: Message.noPrevious.value
         }
+        print(f"Acceptor {acceptor.id} enviado Prepare Response (Not Previous) ao Proposer (n: {request_proposer['n']}, v: {request_proposer['v']}) , Não propostas anteriores.")  
+        
         
       else: # Se o acceptor ja tiver uma proposta ele fica com a maior
-        
+            
           # Se há proposta recebida for maior, ele fica com ela e reponde ao proposer a proposta cujo n é menor
         if request_proposer['n']> greater_proposer['n']:
             
@@ -59,7 +62,7 @@ class AcceptorController:
                                 'v': acceptor.greater_proposer['v']  
                               }
             }
-            
+            print(f"Acceptor {acceptor.id} enviado Prepare Response (n: {acceptor.greater_proposer['n']} v: {acceptor.greater_proposer['v']}) ao Proposer (n: {request_proposer['n']}, v: {request_proposer['v']}) , Aceitando a proposta e solicitando atualização do v.")  
             # Acceptor atualiza seu maior valor de proposta recebido
             acceptor.greater_proposer =  request_proposer #set_greater_proposer(request_proposer)
       

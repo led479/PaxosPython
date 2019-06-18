@@ -38,6 +38,7 @@ class ProposerController:
                                    'v': proposer.v
                                    }
        }
+       print(F"Proposer (n: {proposer.n} v: {proposer.v}) enviando prepare request aos acceptors.\n")
        responses = self.mc.ac.prepare_response(request)
        proposer.responses = responses
 
