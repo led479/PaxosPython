@@ -57,7 +57,7 @@ class ProposerController:
                     
                     # Proposer atualiza seu valor com o maior v recebido pelos acceptors
                     if v_response > proposer.v:
-                        proposer.v = v_response;
+                        proposer.v = v_response
                     
             # Prepara Messagem accept request
             accept = {
