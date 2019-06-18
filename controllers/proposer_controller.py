@@ -1,5 +1,6 @@
 from models.proposer import Proposer
 from utilits.message import Message
+from random import randint
 
 
 class ProposerController:
@@ -9,16 +10,23 @@ class ProposerController:
     self.proposers = []
 
   def proposal_number(self):
-    # Proposer pode ser aleatório CORRIGIR
-    if len(self.proposers) == 0:
-      return 40 #1
-    #return self.proposers[-1].n + 1
-    return self.proposers[-1].n + 1
+    # Proposer pode ser aleatório
+    random = randint(1, 99)
+    if self.check_if_id_is_used(random):
+      return self.proposal_number()
+    else:
+      return random
   
   def create_proposer(self, v):
     proposer = Proposer(self, self.proposal_number(), v)
     self.proposers.append(proposer)
 
+  def check_if_id_is_used(self, id):
+    for proposer in self.proposers:
+      if proposer.n == id:
+        return True
+    return False
+    
 # Cada proposer envia prepare_request aos acceptors
   def prepare_request(self):
     for proposer in self.proposers: # Também é possivel fazer para cada proposer assim que for criado chamar esse método.
