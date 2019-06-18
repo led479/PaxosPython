@@ -1,6 +1,7 @@
 from utilits.message import Message
 from models.learner import Learner
 from utilits.message import Message
+import collections
 
 
 class LearnerController:
@@ -20,36 +21,23 @@ class LearnerController:
         self.learners.append(learner)
 
     def accepted_paxos(self, accepted_values):
+        print(accepted_values)
         for learner in self.learners:
-            first_value = accepted_values[0]['Accepted'] # Pega primeiro valor do primeiro accept para compara com os deamais
-            count_value_equals = 0 # Conta quantos valores iguais foram encontrados
-            position_list = 0 # Conta posição na lista de valores recebidos
-            total_values = len(accepted_values) # Armazena a quantidade de valores que
-            count_verified = 0
+            values = []
+            for accepted_value in accepted_values:
+                values.append(accepted_value['Accepted'])
             
-            while position_list < total_values:
-            #for accepted_value in accepted_values:
-                if accepted_values[position_list]['Accepted'] == first_value:
-                    count_value_equals +=1
-                
-                position_list +=1    # Adiciona a quantidade de elementos percorridos na lista
-                min_acceptors_response = self.mc.ac.min_accept_request() # Armazena a quantidade minima de acceptors que devem responder ao prepare request
+            # Conta quais os valores que mais aparecem na lista
+            counter = collections.Counter(values)
+            most_accepted_values = list(counter.keys())
 
-                # Verifica quantidade de valores iguais é igual ou maior que a quantidade de respostas minimas, maioria consenso
-                if count_value_equals >= min_acceptors_response:
-                    print(f"{Message.accepeted_value.value}{accepted_value['Accepted']}")
-                    break
-                
-                lack_elements = total_values - position_list # Armazena a quantidade de elementos restantes da lista (falta para acabar)
-                lack_response = min_acceptors_response - count_value_equals # Armazena a quantidade de respostas que falta para v ser aceito pelo paxos
+            # Pega o valor que apareceu mais vezes
+            value = most_accepted_values[0]
 
-                # Se quantidade de respostas que falta para v ser aceito for menor que a quantidade de elementos na lista
-                if lack_elements < lack_response:
-                    if count_verified == total_values:
-                        print(F"{Message.no_consensus.value}")
-                    else:
-                        count_verified+=1 # 
-                        first_value = accepted_values[i]['Accepted'] # Troca v para testar novo valor
-                        total_values-=1 # Segundo elemento percorre a lista a partir dele nao olhando valores anteriores, pois já foi verificado se era igual
-                        position_list = i; # Ponteiro retornar para o proximo v que ser testado para ser aceito ou não
-                    
+            if counter[value] >= self.mc.ac.min_accept_request():
+                print(f"Learner {learner.id} aceitou o valor {value}")
+            else:
+                print(f"Learner {learner.id} não aceitou nenhum valor")
+        
+                
+                
