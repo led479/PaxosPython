@@ -24,38 +24,3 @@ while i < 10:
 
 mc.pc.prepare_request() # Mudar isso depois
 mc.pc.accept_request() # Mudar isso depois
-#
-#i =1
-#accepted_values = []
-#while i < 21:
-#    accepted_value = {
-#                    Message.message.value: Message.accepted.value, 
-#                    Message.accepted.value: 15
-#                 }
-#    i+=1
-#    accepted_values.append(accepted_value)
-#
-#accepted_values.append({
-#                    Message.message.value: Message.accepted.value, 
-#                    Message.accepted.value: 11
-#                 })
-#accepted_values.append({
-#                    Message.message.value: Message.accepted.value, 
-#                    Message.accepted.value: 11
-#                 })
-#accepted_values.append({
-#                    Message.message.value: Message.accepted.value, 
-#                    Message.accepted.value: 11
-#                 })
-#accepted_values.append({
-#                    Message.message.value: Message.accepted.value, 
-#                    Message.accepted.value: 11
-#                 })
-#accepted_values.append({
-#                    Message.message.value: Message.accepted.value, 
-#                    Message.accepted.value: 11
-#                 })
-#
-#
-
-#mc.lp.accepted_paxos(accepted_values)

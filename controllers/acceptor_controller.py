@@ -47,7 +47,7 @@ class AcceptorController:
             Message.message.value: Message.prepareResponse,
             Message.proposer.value: Message.noPrevious.value
         }
-        print(f"Acceptor {acceptor.id} enviado Prepare Response (Not Previous) ao Proposer (n: {request_proposer['n']}, v: {request_proposer['v']}) , Não há propostas anteriores.")  
+        print(f"Acceptor {acceptor.id} enviando Prepare Response (Not Previous) ao Proposer (n: {request_proposer['n']}, v: {request_proposer['v']}) , Não há propostas anteriores.")  
         sleep(0.5)
         
       else: # Se o acceptor ja tiver uma proposta ele fica com a maior
@@ -63,7 +63,7 @@ class AcceptorController:
                                 'v': acceptor.greater_proposer['v']  
                               }
             }
-            print(f"Acceptor {acceptor.id} enviado Prepare Response (n: {acceptor.greater_proposer['n']} v: {acceptor.greater_proposer['v']}) ao Proposer (n: {request_proposer['n']}, v: {request_proposer['v']})")  
+            print(f"Acceptor {acceptor.id} enviando Prepare Response (n: {acceptor.greater_proposer['n']} v: {acceptor.greater_proposer['v']}) ao Proposer (n: {request_proposer['n']}, v: {request_proposer['v']})")  
             sleep(0.5)
             # Acceptor atualiza seu maior valor de proposta recebido
             acceptor.greater_proposer =  request_proposer #set_greater_proposer(request_proposer)
@@ -91,6 +91,10 @@ class AcceptorController:
                 Message.message.value: Message.accepted.value, 
                 Message.accepted.value :acceptor.greater_proposer['v']
              }
+            print(f"Acceptor {acceptor.id} recebe um Proposer maior ou igual ao que ele já conhece. Proposer (n: {accept_proposer['n']}, v: {accept_proposer['v']}).") 
+            sleep(0.5)
+            print(f"Acceptor {acceptor.id} enviando Accepted aos Learners v: {accept_proposer['v']}.\n")
+            sleep(0.5)
             # Armazena as os valores de cada acceptor
             accepted_values.append(accepted_value)
     # Se estiver vazio acceptor nao recebeu nenhuma proposta igual ou superior aquele já conhece

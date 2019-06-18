@@ -64,7 +64,8 @@ class ProposerController:
                     # Proposer atualiza seu valor com o maior v recebido pelos acceptors
                     if v_response > proposer.v:
                         proposer.v = v_response
-                    
+            print(F"Proposer (n: {proposer.n} atualiza seu V para v: {proposer.v}).")
+            sleep(0.5)        
             # Prepara Messagem accept request
             accept = {
                 Message.message.value : Message.acceptRequest.value,
@@ -73,7 +74,7 @@ class ProposerController:
                                         'v': proposer.v
                                          } 
                 }                
-            print(F"\nProposer (n: {proposer.n} v: {proposer.v}) enviando accept request request aos acceptors.")
+            print(F"Proposer (n: {proposer.n} v: {proposer.v}) enviando accept request request aos acceptors.\n")
             sleep(0.5)
             # Depois de atualizado o valor do proposer ele solicita accepted aos acceptors
             self.mc.ac.accepted(accept)

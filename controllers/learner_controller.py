@@ -21,7 +21,7 @@ class LearnerController:
         self.learners.append(learner)
 
     def accepted_paxos(self, accepted_values):
-        print(accepted_values)
+        #print(accepted_values)
         for learner in self.learners:
             values = []
             for accepted_value in accepted_values:
@@ -36,8 +36,10 @@ class LearnerController:
 
             if counter[value] >= self.mc.ac.min_accept_request():
                 print(f"Learner {learner.id} aceitou o valor {value}")
+                sleep(0.5)
             else:
                 print(f"Learner {learner.id} não aceitou nenhum valor")
+                sleep(0.5)
         
                 
                 
