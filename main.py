@@ -12,23 +12,47 @@ while (i < 20):
 print(f"{len(mc.ac.acceptors)} {Message.acceptorsCreate.value}")
 
 i = 0
-while i < 3:
+while i < 10:
   mc.pc.create_proposer(valor_para_validar)
-  sleep(0.25)
+  sleep(0.01)
   i += 1
 
 mc.lp.create_learner()
 
-#mc.pc.prepare_request() # Mudar isso depois
-#mc.pc.accept_request() # Mudar isso depois
+mc.pc.prepare_request() # Mudar isso depois
+mc.pc.accept_request() # Mudar isso depois
+#
+#i =1
+#accepted_values = []
+#while i < 21:
+#    accepted_value = {
+#                    Message.message.value: Message.accepted.value, 
+#                    Message.accepted.value: 15
+#                 }
+#    i+=1
+#    accepted_values.append(accepted_value)
+#
+#accepted_values.append({
+#                    Message.message.value: Message.accepted.value, 
+#                    Message.accepted.value: 11
+#                 })
+#accepted_values.append({
+#                    Message.message.value: Message.accepted.value, 
+#                    Message.accepted.value: 11
+#                 })
+#accepted_values.append({
+#                    Message.message.value: Message.accepted.value, 
+#                    Message.accepted.value: 11
+#                 })
+#accepted_values.append({
+#                    Message.message.value: Message.accepted.value, 
+#                    Message.accepted.value: 11
+#                 })
+#accepted_values.append({
+#                    Message.message.value: Message.accepted.value, 
+#                    Message.accepted.value: 11
+#                 })
+#
+#
 
-i =1
-accepted_values = []
-while i < 21:
-    accepted_value = {
-                    Message.message.value: Message.accepted.value, 
-                    Message.accepted.value :i
-                 }
-    i+=1
-    accepted_values.append(accepted_value)
 mc.lp.accepted_paxos(accepted_values)
