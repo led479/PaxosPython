@@ -1,6 +1,7 @@
 from models.acceptor import Acceptor
 from utilits.message import Message
 import math
+from time import sleep
 
 class AcceptorController:
 
@@ -46,8 +47,8 @@ class AcceptorController:
             Message.message.value: Message.prepareResponse,
             Message.proposer.value: Message.noPrevious.value
         }
-        print(f"Acceptor {acceptor.id} enviado Prepare Response (Not Previous) ao Proposer (n: {request_proposer['n']}, v: {request_proposer['v']}) , Não propostas anteriores.")  
-        
+        print(f"Acceptor {acceptor.id} enviado Prepare Response (Not Previous) ao Proposer (n: {request_proposer['n']}, v: {request_proposer['v']}) , Não há propostas anteriores.")  
+        sleep(0.5)
         
       else: # Se o acceptor ja tiver uma proposta ele fica com a maior
             
@@ -62,7 +63,8 @@ class AcceptorController:
                                 'v': acceptor.greater_proposer['v']  
                               }
             }
-            print(f"Acceptor {acceptor.id} enviado Prepare Response (n: {acceptor.greater_proposer['n']} v: {acceptor.greater_proposer['v']}) ao Proposer (n: {request_proposer['n']}, v: {request_proposer['v']}) , Aceitando a proposta e solicitando atualização do v.")  
+            print(f"Acceptor {acceptor.id} enviado Prepare Response (n: {acceptor.greater_proposer['n']} v: {acceptor.greater_proposer['v']}) ao Proposer (n: {request_proposer['n']}, v: {request_proposer['v']})")  
+            sleep(0.5)
             # Acceptor atualiza seu maior valor de proposta recebido
             acceptor.greater_proposer =  request_proposer #set_greater_proposer(request_proposer)
       

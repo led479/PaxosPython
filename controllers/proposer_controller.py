@@ -1,6 +1,7 @@
 from models.proposer import Proposer
 from utilits.message import Message
 from random import randint
+from time import sleep
 
 
 class ProposerController:
@@ -38,8 +39,12 @@ class ProposerController:
                                    'v': proposer.v
                                    }
        }
-       print(F"Proposer (n: {proposer.n} v: {proposer.v}) enviando prepare request aos acceptors.\n")
+       print(F"\nProposer (n: {proposer.n} v: {proposer.v}) enviando prepare request aos acceptors.")
+       sleep(0.5)
        responses = self.mc.ac.prepare_response(request)
+       if responses == []:
+           print(F"Proposer (n: {proposer.n} v: {proposer.v}) foi ignorado.\n")
+           sleep(0.5)
        proposer.responses = responses
 
    # Verifica se a maioria dos acceptores (metade +1) concordaram com a response
@@ -68,6 +73,7 @@ class ProposerController:
                                         'v': proposer.v
                                          } 
                 }                
-        
+            print(F"\nProposer (n: {proposer.n} v: {proposer.v}) enviando accept request request aos acceptors.")
+            sleep(0.5)
             # Depois de atualizado o valor do proposer ele solicita accepted aos acceptors
             self.mc.ac.accepted(accept)

@@ -14,5 +14,5 @@ class Proposer:
     else:
       self.v = v
     
-    print(f"Proposer criado (n: {self.n} v: {self.v})\n")
+    print(f"Proposer criado (n: {self.n} v: {self.v})")
 
