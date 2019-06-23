@@ -1,5 +1,4 @@
 from models.acceptor import Acceptor
-from utilits.message import Message
 import math
 from time import sleep
 
@@ -8,6 +7,7 @@ class AcceptorController:
   def __init__(self, main_controller):
     self.mc = main_controller
     self.acceptors = []
+    self.accepted_values_value = None #Armazena valor aceito pelo Paxos
 
   def generate_id(self):
     if not self.acceptors:     # Se a lista de acceptors estiver vazia
@@ -36,37 +36,47 @@ class AcceptorController:
 
       # Armazena a maior proposta conhecida pelo acceptor
       greater_proposer = acceptor.greater_proposer
-      
-      
-      # Se acceptor não conter nenhuma outra proposta ele guarda a proposta e envia um prepare reponse com no previous
-      if greater_proposer == {}:
-        acceptor.greater_proposer =  request_proposer #set_greater_proposer(request_proposer)
-        
-        # Prepara a mensagem de reposta
-        response = {
-            Message.message.value: Message.prepareResponse,
-            Message.proposer.value: Message.noPrevious.value
-        }
-        print(f"Acceptor {acceptor.id} enviando Prepare Response (Not Previous) ao Proposer (n: {request_proposer['n']}, v: {request_proposer['v']}) , Não há propostas anteriores.")  
-        sleep(0.5)
-        
-      else: # Se o acceptor ja tiver uma proposta ele fica com a maior
-            
-          # Se há proposta recebida for maior, ele fica com ela e reponde ao proposer a proposta cujo n é menor
-        if request_proposer['n']> greater_proposer['n']:
-            
-            # Prepara a mensagem de reposta
-            response = {
-            Message.message.value: Message.prepareResponse,
-            Message.proposer.value: {
+
+      # Se paxos ja possuir aceito um valor v aceito os acceptors devolvem aos proposrs cujo N e maior o valor aceito
+      if self.accepted_values_value != None and request_proposer['n']> greater_proposer['n']:
+          response = {
+            'message': 'Prepare Response',
+            'proposer': {
                                 'n': acceptor.greater_proposer['n'], # Devolve a proposta cujo n é inferior ao recebido
-                                'v': acceptor.greater_proposer['v']  
+                                'v': self.accepted_values_value #Devolve o valor aceito pelo paxos  
                               }
             }
-            print(f"Acceptor {acceptor.id} enviando Prepare Response (n: {acceptor.greater_proposer['n']} v: {acceptor.greater_proposer['v']}) ao Proposer (n: {request_proposer['n']}, v: {request_proposer['v']})")  
-            sleep(0.5)
-            # Acceptor atualiza seu maior valor de proposta recebido
+          print(f"Acceptor {acceptor.id} enviando Prepare Response (n: {acceptor.greater_proposer['n']} v: {self.accepted_values_value}) ao Proposer (n: {request_proposer['n']}, v: {request_proposer['v']})")  
+      else:
+          # Se acceptor não conter nenhuma outra proposta ele guarda a proposta e envia um prepare reponse com no previous
+          if greater_proposer == {}:
             acceptor.greater_proposer =  request_proposer #set_greater_proposer(request_proposer)
+        
+            # Prepara a mensagem de reposta
+            response = {
+                'message': 'Prepare Response',
+                'proposer': 'no previous'
+            }
+            print(f"Acceptor {acceptor.id} enviando Prepare Response (No Previous) ao Proposer (n: {request_proposer['n']}, v: {request_proposer['v']}) , Não há propostas anteriores.")  
+            sleep(0.5)
+        
+          else: # Se o acceptor ja tiver uma proposta ele fica com a maior
+            
+              # Se há proposta recebida for maior, ele fica com ela e reponde ao proposer a proposta cujo n é menor
+            if request_proposer['n']> greater_proposer['n']:
+            
+                # Prepara a mensagem de reposta
+                response = {
+                'message': 'Prepare Response',
+                'proposer': {
+                                    'n': acceptor.greater_proposer['n'], # Devolve a proposta cujo n é inferior ao recebido
+                                    'v': acceptor.greater_proposer['v']  
+                                  }
+                }
+                print(f"Acceptor {acceptor.id} enviando Prepare Response (n: {acceptor.greater_proposer['n']} v: {acceptor.greater_proposer['v']}) ao Proposer (n: {request_proposer['n']}, v: {request_proposer['v']})")  
+                sleep(0.5)
+                # Acceptor atualiza seu maior valor de proposta recebido
+                acceptor.greater_proposer =  request_proposer #set_greater_proposer(request_proposer)
       
       # Se a nova proposta n for menor, é ignorada      
       if response != {}:
@@ -88,8 +98,8 @@ class AcceptorController:
             
             # Monta a mensagem que será envia ao learner com valor que será aceito
             accepted_value = {
-                Message.message.value: Message.accepted.value, 
-                Message.accepted.value :acceptor.greater_proposer['v']
+                'message': 'Accepted', 
+                'Accepted' :acceptor.greater_proposer['v']
              }
             print(f"Acceptor {acceptor.id} recebe um Proposer maior ou igual ao que ele já conhece. Proposer (n: {accept_proposer['n']}, v: {accept_proposer['v']}).") 
             sleep(0.5)

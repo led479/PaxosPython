@@ -1,6 +1,4 @@
-from utilits.message import Message
 from models.learner import Learner
-from utilits.message import Message
 import collections
 from time import sleep
 
@@ -36,10 +34,11 @@ class LearnerController:
             value = most_accepted_values[0]
 
             if counter[value] >= self.mc.ac.min_accept_request():
-                print(f"Learner {learner.id} aceitou o valor {value}")
+                self.mc.ac.accepted_values_value = value; # Avisa aos acceptors que aceitou valor
+                print(f"Learner {learner.id} aceitou o valor {value}.\n")
                 sleep(0.5)
             else:
-                print(f"Learner {learner.id} não aceitou nenhum valor")
+                print(f"Learner {learner.id} não aceitou nenhum valor.\n")
                 sleep(0.5)
         
                 

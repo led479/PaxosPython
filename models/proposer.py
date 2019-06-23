@@ -7,9 +7,9 @@ class Proposer:
     self.n = n
     self.responses = []
 
-    # o Proposer tem a probabilidade de 10% de ser criado com o valor errado
+    # o Proposer tem a probabilidade de 50% de ser criado com o valor errado
     random = randint(1, 10)
-    if random == 5 :
+    if random % 2 == 0 :
       self.v = v + random
     else:
       self.v = v

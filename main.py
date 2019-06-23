@@ -1,6 +1,5 @@
 from controllers.main_controller import MainController
 from time import sleep
-from utilits.message import Message
 
 valor_para_validar = 8
 mc = MainController()
@@ -14,13 +13,15 @@ while (i < 20):
   i += 1
 print(f"{len(mc.ac.acceptors)} acceptors foram criados.\n")
 
-i = 0
-while i < 10:
-  mc.pc.create_proposer(valor_para_validar)
-  sleep(0.01)
-  i += 1
+j = 1
+while j <=5:
+    mc.pc.proposers = []
+    i = 0
+    while i < 10:
+      mc.pc.create_proposer(valor_para_validar)
+      sleep(0.01)
+      i += 1
 
-
-
-mc.pc.prepare_request() # Mudar isso depois
-mc.pc.accept_request() # Mudar isso depois
+    mc.pc.prepare_request() # Mudar isso depois
+    mc.pc.accept_request() # Mudar isso depois
+    j +=1

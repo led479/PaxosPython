@@ -1,8 +1,6 @@
 from models.proposer import Proposer
-from utilits.message import Message
 from random import randint
 from time import sleep
-
 
 class ProposerController:
 
@@ -33,8 +31,8 @@ class ProposerController:
     for proposer in self.proposers: # Também é possivel fazer para cada proposer assim que for criado chamar esse método.
        
        request = {
-           Message.message.value: Message.prepareRequest.value,
-           Message.proposer.value: {
+           'message': 'Prepare Request',
+           'proposer': {
                                    'n': proposer.n,
                                    'v': proposer.v
                                    }
@@ -58,23 +56,26 @@ class ProposerController:
             for response in proposer.responses:
                 
                 # no previus, acceptor aceitou a request pois nao haviam outras propostas
-                if response['proposer'] != Message.noPrevious.value:
+                if response['proposer'] != 'no previous':
                     v_response = response['proposer']['v'] #Armazena o valor de v recebido no prepare response do acceptor
                     
-                    # Proposer atualiza seu valor com o maior v recebido pelos acceptors
-                    if v_response > proposer.v:
-                        proposer.v = v_response
-            print(F"Proposer (n: {proposer.n} atualiza seu V para v: {proposer.v}).")
+                    if self.mc.ac.accepted_values_value != None:
+                        proposer.v = v_response = self.mc.ac.accepted_values_value
+                    else:
+                        # Proposer atualiza seu valor com o maior v recebido pelos acceptors
+                        if v_response > proposer.v:
+                            proposer.v = v_response
+            print(F"\nProposer (n: {proposer.n} atualiza seu V para v: {proposer.v}).\n")
             sleep(0.5)        
             # Prepara Messagem accept request
             accept = {
-                Message.message.value : Message.acceptRequest.value,
-                Message.proposer.value : {
+                'message' : 'Accept Request',
+                'proposer' : {
                                         'n': proposer.n,
                                         'v': proposer.v
                                          } 
                 }                
-            print(F"Proposer (n: {proposer.n} v: {proposer.v}) enviando accept request request aos acceptors.\n")
+            print(F"Proposer (n: {proposer.n} v: {proposer.v}) enviando accept request aos acceptors.\n")
             sleep(0.5)
             # Depois de atualizado o valor do proposer ele solicita accepted aos acceptors
             self.mc.ac.accepted(accept)
